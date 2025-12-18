@@ -2,33 +2,165 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>控制器选择</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>exvr控制器选择</title>
     <style>
+        :root {
+            --primary-color: #0078D7;
+            --primary-hover: #1080E0;
+            --bg-color: #0F0F0F;
+            --surface-color: rgba(32, 32, 32, 0.8);
+            --glass-color: rgba(32, 32, 32, 0.5);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-color: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-medium: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1a 100%);
+            color: var(--text-color);
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f4f4f9;
+            overflow: hidden;
         }
+
+        /* 玻璃态效果 */
+        .glass {
+            background: var(--glass-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* 容器 */
         .container {
             text-align: center;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px 30px;
+            border-radius: 20px;
+            animation: fadeInUp 0.5s ease-out;
         }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 16px;
+
+        /* 标题 */
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        /* 按钮组 */
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* UWP风格按钮 */
+        .uwp-button {
+            padding: 16px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            background: var(--primary-color);
+            color: white;
             cursor: pointer;
+            transition: var(--transition-medium);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .uwp-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 120, 215, 0.4);
+        }
+
+        .uwp-button:active {
+            transform: translateY(0);
+            transition: var(--transition-fast);
+        }
+
+        /* 按钮内发光效果 */
+        .uwp-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .uwp-button:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .container {
+                padding: 30px 20px;
+            }
+
+            .uwp-button {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container glass">
         <h1>选择控制器</h1>
-        <button onclick="location.href='/left'">左控制器</button>
-        <button onclick="location.href='/right'">右控制器</button>
+        <p class="subtitle">请选择要使用的虚拟控制器</p>
+        <div class="button-group">
+            <button class="uwp-button" onclick="location.href='/left'">左手控制器</button>
+            <button class="uwp-button" onclick="location.href='/right'">右手控制器</button>
+        </div>
     </div>
 </body>
 </html>

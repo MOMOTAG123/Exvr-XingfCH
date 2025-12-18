@@ -1,17 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>VR控制器 - {{ hand|upper }}</title>
+    <title>VR控制器 - {{ hand|default('未知')|upper }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
         :root {
-            --primary-color: #2196F3;
-            --button-size: 18vw; /* 使用视口宽度定义按钮大小 */
+            /* UWP 设计语言颜色 */
+            --primary-color: #0078D7;
+            --primary-hover: #1080E0;
+            --accent-color: #FFA500;
+            --bg-color: #0F0F0F;
+            --surface-color: rgba(32, 32, 32, 0.8);
+            --glass-color: rgba(32, 32, 32, 0.5);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-color: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --button-size: 18vw;
+            
+            /* 阴影和过渡 */
+            --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.3);
+            --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 20px rgba(0, 120, 215, 0.4);
+            --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-medium: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        body {
+
+        /* 媒体查询：适配小屏幕设备 */
+        @media (max-width: 360px) {
+            :root {
+                --button-size: 20vw;
+            }
+        }
+
+        /* 媒体查询：适配大屏幕设备 */
+        @media (min-width: 768px) {
+            :root {
+                --button-size: 15vw;
+            }
+        }
+
+        /* 媒体查询：横屏适配 */
+        @media (orientation: landscape) {
+            :root {
+                --button-size: 12vh;
+            }
+            
+            body {
+                flex-direction: row;
+            }
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            background: #000;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a1a 100%);
+            color: var(--text-color);
             overflow: hidden;
             touch-action: none;
             height: 100vh;
@@ -22,6 +70,46 @@
             position: relative;
         }
 
+        /* 玻璃态效果 */
+        .gesture-panel,
+        .joystick-area,
+        .dial-area,
+        .slider-area,
+        .vr-button,
+        .trigger,
+        .cube-container,
+        .edit-button {
+            background: var(--glass-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* 校准提示 */
+        .calibration-hint {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 120, 215, 0.9);
+            color: white;
+            padding: 2vw 4vw;
+            border-radius: 1.5vw;
+            font-size: 3.5vw;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: var(--shadow-glow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(0, 120, 215, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(0, 120, 215, 0.8); }
+            100% { box-shadow: 0 0 20px rgba(0, 120, 215, 0.4); }
+        }
+
+        /* 手势面板 */
         .gesture-panel {
             position: absolute;
             {% if hand == 'Right' %}
@@ -31,12 +119,9 @@
             {% endif %}
             bottom: 8.5%;
             width: 60vw;
-            height: 5vh;
-            background: rgba(255, 255, 255, 0.1);
+            height: 14vw;
             border-radius: 2vw;
-            padding: 1vw;
-            box-shadow: 0 0.5vw 2vw rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 1.5vw;
             display: flex;
             {% if hand == 'Right' %}
             flex-direction: row-reverse;
@@ -45,13 +130,18 @@
             {% endif %}
             justify-content: flex-start;
             overflow-x: auto;
-            padding-bottom: 1vw;
-            padding-left: 1vw;
+            overflow-y: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .gesture-panel::-webkit-scrollbar {
+            display: none;
         }
 
         .gesture-grid {
             display: flex;
-            gap: 0.7vh;
+            gap: 1vw;
             height: 100%;
             justify-content: flex-start;
             align-items: center;
@@ -59,33 +149,41 @@
         }
 
         .gesture-item {
-            width: 10vw;
-            height: 10vw;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 12vw;
+            height: 12vw;
+            background: var(--glass-color);
+            border: 1px solid var(--border-color);
             border-radius: 1.5vw;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 5vw;
-            color: white;
+            font-weight: 600;
+            color: var(--text-color);
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             -webkit-touch-callout: none;
-            transition: all 0.1s ease;
+            transition: var(--transition-medium);
             position: relative;
             flex-shrink: 0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .gesture-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
         }
 
         .gesture-item.active {
-            background: rgba(33, 150, 243, 0.3);
+            background: rgba(0, 120, 215, 0.4);
             border-color: var(--primary-color);
-            box-shadow: 0 0 1.5vw rgba(33, 150, 243, 0.3);
+            box-shadow: var(--shadow-glow);
             transform: scale(0.95);
         }
 
+        /* 摇杆区域 */
         .joystick-area {
             position: absolute;
             {% if hand == 'Right' %}
@@ -94,28 +192,33 @@
             left: 27%;
             {% endif %}
             bottom: 30%;
-            width: 45vw; /* 使用视口宽度定义摇杆区域大小 */
-            height: 45vw; /* 保持宽高比一致 */
-            background: rgba(255, 255, 255, 0.1);
+            width: 45vw;
+            height: 45vw;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         .joystick-thumb {
-            width: 12vw; /* 使用视口宽度定义摇杆手柄大小 */
-            height: 12vw; /* 保持宽高比一致 */
+            width: 12vw;
+            height: 12vw;
             background: var(--primary-color);
             border-radius: 50%;
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s, background 0.1s;
+            transition: var(--transition-fast);
+            box-shadow: var(--shadow-glow);
         }
+
         .joystick-thumb.active {
-            background: red;
+            background: #D13438;
+            box-shadow: 0 0 20px rgba(209, 52, 56, 0.6);
         }
+
+        /* 旋钮区域 */
         .dial-area {
             position: absolute;
             {% if hand == 'Right' %}
@@ -126,23 +229,26 @@
             top: 28%;
             width: 28vw;
             height: 28vw;
-            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         .dial-thumb {
-            width: 7vw;
-            height: 7vw;
-            background: #FFFFFF;
+            width: 8vw;
+            height: 8vw;
+            background: var(--primary-color);
             border-radius: 50%;
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s, background 0.1s;
+            transition: var(--transition-fast);
+            box-shadow: var(--shadow-glow);
         }
+
+        /* 滑块区域 */
         .slider-area {
             position: absolute;
             {% if hand == 'Right' %}
@@ -153,7 +259,6 @@
             top: 10%;
             width: 8vw;
             height: 28vw;
-            background: rgba(255, 255, 255, 0.1);
             border-radius: 4vw;
             overflow: hidden;
             display: flex;
@@ -162,77 +267,155 @@
 
         .slider-thumb {
             width: 8vw;
-            height: 3vw;
-            background: #FFFFFF;
+            height: 4vw;
+            background: var(--primary-color);
             border-radius: 4vw;
             position: absolute;
-            transition: transform 0.1s;
+            transition: var(--transition-fast);
             touch-action: none;
+            box-shadow: var(--shadow-glow);
         }
+
+        /* VR按钮 */
         .vr-button {
             width: var(--button-size);
             height: var(--button-size);
             border-radius: 50%;
-            background: rgba(51, 51, 51, 0.5);
-            border: 2px solid #666;
             display: flex;
             align-items: center;
             justify-content: center;
             position: absolute;
-            transition: background 0.1s, border-color 0.1s;
+            transition: var(--transition-medium);
+            box-shadow: var(--shadow-soft);
         }
+
+        .vr-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
         .vr-button.active {
             background: var(--primary-color);
-            border-color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-glow);
         }
+
+        /* 按钮标签 */
         .vr-button-label,
         .trigger-label,
         .edit-button-label,
         .cube-face {
             position: absolute;
-            color: white;
-            font-size: 2vh; /* 使用视口高度定义字体大小 */
+            color: var(--text-color);
+            font-size: 2.5vw;
+            font-weight: 600;
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             -webkit-touch-callout: none;
         }
-        .vr-button-label {
+
+        @media (orientation: landscape) {
+            .vr-button-label,
+            .trigger-label,
+            .edit-button-label,
+            .cube-face {
+                font-size: 2vh;
+            }
         }
+
+        /* 触发器 */
         .trigger {
             width: var(--button-size);
             height: var(--button-size);
             border-radius: 50%;
-            background: rgba(51, 51, 51, 0.5);
-            border: 2px solid #666;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.1s, border-color 0.1s;
+            transition: var(--transition-medium);
             position: absolute;
+            box-shadow: var(--shadow-soft);
         }
+
+        .trigger:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
         .trigger.active {
             background: var(--primary-color);
-            border-color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-glow);
         }
-        .trigger .trigger-label {
+
+        /* 触发器定位 */
+        .trigger {
+            {% if hand == 'Right' %}
+            right: 6vw;
+            {% else %}
+            left: 6vw;
+            {% endif %}
+            bottom: 42%;
+            min-width: 44px;
+            min-height: 44px;
         }
-        .grab .trigger-label {
+        
+        .grab {
+            {% if hand == 'Right' %}
+            right: 6vw;
+            {% else %}
+            left: 6vw;
+            {% endif %}
+            bottom: 33%;
+            min-width: 44px;
+            min-height: 44px;
         }
-        {% if hand == 'Right' %}
-        .trigger { right: 6vw; bottom : 42%;}
-        .grab { right: 6vw; bottom : 33%;}
-        {% else %}
-        .trigger { left: 6vw; bottom : 42%;}
-        .grab { left: 6vw; bottom : 33%;}
-        {% endif %}
+
+        @media (max-width: 360px) {
+            .trigger {
+                {% if hand == 'Right' %}
+                right: 4vw;
+                {% else %}
+                left: 4vw;
+                {% endif %}
+            }
+            
+            .grab {
+                {% if hand == 'Right' %}
+                right: 4vw;
+                {% else %}
+                left: 4vw;
+                {% endif %}
+            }
+        }
+
+        @media (orientation: landscape) {
+            .trigger {
+                {% if hand == 'Right' %}
+                right: 4vh;
+                {% else %}
+                left: 4vh;
+                {% endif %}
+                bottom: 50%;
+            }
+            
+            .grab {
+                {% if hand == 'Right' %}
+                right: 4vh;
+                {% else %}
+                left: 4vh;
+                {% endif %}
+                bottom: 35%;
+            }
+        }
+
+        /* 立方体控制器 */
         {% if hand == 'Right' %}
         .cube-container {
             width: 24vw;
             height: 24vw;
             perspective: 50vw;
-            margin-bottom: 2vh;
             position: absolute;
             right: 38%;
             bottom: 60%;
@@ -242,7 +425,6 @@
             width: 24vw;
             height: 24vw;
             perspective: 50vw;
-            margin-bottom: 2vh;
             position: absolute;
             left: 38%;
             bottom: 60%;
@@ -257,17 +439,20 @@
             transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
             transition: transform 0.1s linear;
         }
+
         .cube-face {
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--glass-color);
             border: 2px solid var(--primary-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 3vh; /* 使用视口高度定义字体大小 */
-            font-weight: bold;
+            font-size: 5vw;
+            font-weight: 700;
+            box-shadow: var(--shadow-soft);
         }
+
         .cube-face.front { transform: translateZ(12vw); }
         .cube-face.back { transform: rotateY(180deg) translateZ(12vw); }
         .cube-face.left { transform: rotateY(-90deg) translateZ(12vw); }
@@ -275,24 +460,42 @@
         .cube-face.top { transform: rotateX(90deg) translateZ(12vw); }
         .cube-face.bottom { transform: rotateX(-90deg) translateZ(12vw); }
 
+        /* 编辑按钮 */
         .edit-button {
             width: 8vw;
             height: 8vw;
-            border-radius: 10%;
-            background: rgba(255, 165, 0, 0.5);
-            border: 2px solid #FFA500;
+            border-radius: 15%;
+            background: rgba(255, 165, 0, 0.2);
+            border: 1px solid var(--accent-color);
             position: absolute;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.1s;
+            transition: var(--transition-medium);
             z-index: 100;
+            box-shadow: var(--shadow-soft);
         }
+
+        .edit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
         .edit-button.active {
-            background: #FFA500;
+            background: rgba(255, 165, 0, 0.4);
+            box-shadow: 0 0 20px rgba(255, 165, 0, 0.4);
         }
+
         .edit-button-label {
-            font-size: 1.5vh;
+            font-size: 1.5vw;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        @media (orientation: landscape) {
+            .edit-button-label {
+                font-size: 1.5vh;
+            }
         }
 
         .draggable {
@@ -301,6 +504,7 @@
             touch-action: none;
         }
 
+        /* 按钮布局 */
         {% if hand == 'Right' %}
         .edit-button {
             top: 5%;
@@ -387,12 +591,12 @@
     <div class="dial-thumb" id="dial"></div>
 </div>
 
-<!-- 顶部中央的校准按钮 -->
-<div class="vr-button" id="calibrate" style="bottom: 80%; left: 40%;">
+<!-- 校准按钮在顶部中央 -->
+<div class="vr-button" id="calibrate" style="top: 15%; left: 50%; transform: translateX(-50%);">
     <div class="vr-button-label">校准</div>
 </div>
 
-<!-- 立方体容器 -->
+<!-- 立方体控制器 -->
 <div class="cube-container">
     <div class="cube" id="cube">
         <div class="cube-face front">前</div>
@@ -404,12 +608,15 @@
     </div>
 </div>
 
-<!-- 摇杆 -->
+<!-- Joystick -->
 <div class="joystick-area">
     <div class="joystick-thumb" id="joystick"></div>
 </div>
 
-<!-- 扳机键 -->
+<!-- 校准提示 -->
+<div class="calibration-hint">请将手机放平，点击校准按钮后移动手机即可使用</div>
+
+<!-- 触发器 -->
 <div class="trigger" id="trigger">
     <div class="trigger-label">扳机</div>
 </div>
@@ -417,10 +624,19 @@
     <div class="trigger-label">抓取</div>
 </div>
 
-<!-- 右手布局 -->
+<!-- 手柄标识 -->
+<div style="position: absolute; top: 5%; left: 50%; transform: translateX(-50%); font-size: 5vw; font-weight: bold; color: var(--primary-color);">
+    {% if hand == 'Right' %}
+    右手柄
+    {% else %}
+    左手柄
+    {% endif %}
+</div>
+
+<!-- Right Hand Layout -->
 {% if hand == 'Right' %}
 <div class="vr-button" id="system" style="bottom: 15%; right: 60%;">
-    <div class="vr-button-label">sys</div>
+    <div class="vr-button-label">系统</div>
 </div>
 <div class="vr-button" id="button1" style="bottom: 15%; right: 40%;">
     <div class="vr-button-label">B</div>
@@ -429,7 +645,7 @@
     <div class="vr-button-label">A</div>
 </div>
 
-<!-- 左手布局 -->
+<!-- Left Hand Layout -->
 {% else %}
 <div class="vr-button" id="button0" style="bottom: 15%; left: 20%;">
     <div class="vr-button-label">X</div>
@@ -438,14 +654,14 @@
     <div class="vr-button-label">Y</div>
 </div>
 <div class="vr-button" id="system" style="bottom: 15%; left: 60%;">
-    <div class="vr-button-label">sys</div>
+    <div class="vr-button-label">SYS</div>
 </div>
 {% endif %}
 
 <script>
     const CONFIG = {
-        hand: "{{ hand }}",
-        sendInterval: "{{ send_interval }}",
+        hand: "{{ hand|default('Left') }}",
+        sendInterval: "{{ send_interval|default('16') }}",
         deadZone: 0.05
     };
 
@@ -462,23 +678,27 @@
     };
 
     socket.onmessage = function(event) {
-        const data = JSON.parse(event.data);
-        if (data.type === 'haptic' && data.hand === CONFIG.hand) {
-            if (isHapticMode){
+        try {
+            const data = JSON.parse(event.data);
+            if (data.type === 'haptic' && data.hand === CONFIG.hand) {
+            if (isHapticMode) {
                 triggerHapticFeedback(data.duration);
             }
-            if (isSoundMode){
-                playVabrationSound(data.duration);
+            if (isSoundMode) {
+                playVibrationSound(data.duration);
             }
+        }
+        } catch (error) {
+            console.error('解析WebSocket消息失败:', error);
         }
     };
     let isPlaying = false;
-   function playVabrationSound(duration = 100) {
+   function playVibrationSound(duration = 100) {
        if (isPlaying) {
-           console.log('声音正在播放，请稍候');
+           console.log('声音正在播放中，请稍候');
            return;
        }
-       if (duration<100 && duration >0){
+       if (duration < 100 && duration > 0) {
           duration = 100;
        }
        if (!audioContext) return;
@@ -492,7 +712,7 @@
            oscillator.type = 'sine';
            oscillator.frequency.setValueAtTime(140, audioContext.currentTime);
            gainNode.gain.setValueAtTime(1.0, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration/1000);
+           gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
 
            oscillator.start();
            oscillator.stop(audioContext.currentTime + duration / 1000);
@@ -513,12 +733,13 @@
                 navigator.vibrate(duration);
             }
         } catch (e) {
-            console.warn('震动失败:', e);
+            console.warn('震动反馈失败:', e);
         }
     }
 
     socket.onclose = function() {
         console.log('WebSocket连接已关闭');
+        // 可以在这里添加重连逻辑
     };
 
     socket.onerror = function(error) {
@@ -573,10 +794,10 @@
         }
     });
 
-    // 重置按钮功能
+    // Reset Button functionality
     document.getElementById('resetBtn').addEventListener('touchstart', function() {
         localStorage.removeItem(storageKey);
-        window.location.reload(); // 重新加载页面以重置位置
+        window.location.reload(); // Reload the page to reset positions
     });
 
     document.getElementById('hapticBtn').addEventListener('touchstart', function(e) {
@@ -644,17 +865,22 @@
     window.addEventListener('load', function() {
         const savedPositions = localStorage.getItem(storageKey);
         if (savedPositions) {
-            positions = JSON.parse(savedPositions);
-            Object.entries(positions).forEach(([id, pos]) => {
-                const el = document.getElementById(id) ||
-                         document.querySelector(`.${id.split(' ')[0]}`);
-                if (el) {
-                    el.style.left = `${pos.x}px`;
-                    el.style.top = `${pos.y}px`;
-                    el.style.right = 'auto';
-                    el.style.bottom = 'auto';
-                }
-            });
+            try {
+                positions = JSON.parse(savedPositions);
+                Object.entries(positions).forEach(([id, pos]) => {
+                    const el = document.getElementById(id) ||
+                             document.querySelector(`.${id.split(' ')[0]}`);
+                    if (el) {
+                        el.style.left = `${pos.x}px`;
+                        el.style.top = `${pos.y}px`;
+                        el.style.right = 'auto';
+                        el.style.bottom = 'auto';
+                    }
+                });
+            } catch (error) {
+                console.error('解析保存的位置失败:', error);
+                localStorage.removeItem(storageKey);
+            }
         }
 
         document.getElementById('hapticBtn').classList.toggle('active', isHapticMode); // [!code ++]
@@ -754,7 +980,7 @@
             ...state
         })
 
-        // 多次发送消息确保接收
+        // Send the message multiple times to ensure it is received
         for (let i = 0; i < 3; i++) {
             if (socket.readyState === WebSocket.OPEN) {
                 socket.send(message);
@@ -1014,15 +1240,23 @@
 
     function initCalibrate() {
         const calibrateBtn = document.getElementById('calibrate');
+        const hint = document.querySelector('.calibration-hint');
+        
+        // 点击校准后隐藏提示
+        calibrateBtn.addEventListener('click', () => {
+            if (hint) {
+                hint.style.display = 'none';
+            }
+        });
 
         async function initAudio() {
             if (!audioContext) {
                 try {
                     const AudioContext = window.AudioContext || window.webkitAudioContext;
                     audioContext = new AudioContext();
-                    console.log('AudioContext已初始化');
+                    console.log('音频上下文已初始化');
                 } catch (error) {
-                    console.error('AudioContext初始化失败:', error);
+                    console.error('音频上下文初始化失败:', error);
                 }
             }
         }
@@ -1033,7 +1267,7 @@
                     const response = await DeviceMotionEvent.requestPermission();
                     console.log('设备运动权限响应:', response);
                 } catch (err) {
-                    console.warn('设备运动权限请求错误:', err);
+                    console.warn('请求设备运动权限错误:', err);
                 }
             }
 
@@ -1042,7 +1276,7 @@
                     const response = await DeviceOrientationEvent.requestPermission();
                     console.log('设备方向权限响应:', response);
                 } catch (err) {
-                    console.warn('设备方向权限请求错误:', err);
+                    console.warn('请求设备方向权限错误:', err);
                 }
             }
         }
@@ -1053,7 +1287,7 @@
                     console.log('震动权限状态:', status.state);
                 }
             } catch (e) {
-                console.warn('震动权限检查失败:', e);
+                console.warn('检查震动权限失败:', e);
             }
         }
 
@@ -1080,7 +1314,7 @@
 
             calibQuaternion = multiplyQuaternions(NinetyDegreesXQuaternion, calibQuaternion);
 
-            console.log('已应用校准');
+            console.log('校准已应用');
         });
     }
     let activeGesture = null;

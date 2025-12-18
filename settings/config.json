@@ -1,7 +1,7 @@
 {
     "Version": "0.7.2.3",
     "Setting": {
-        "priority": "中等运行",
+        "priority": "NORMAL_PRIORITY_CLASS",
         "flip_x": false,
         "flip_y": false,
         "camera_width": 1280,
@@ -16,8 +16,8 @@
     },
     "Mouse": {
         "enable": true,
-        "scalar_x": 200.0,
-        "scalar_y": 150.0,
+        "scalar_x": 3.6,
+        "scalar_y": 3.6,
         "bound_threshold": 0.48,
         "dx": 0.15
     },
@@ -98,10 +98,10 @@
             "center_r_z": -0.12,
             "shift_l_y": 0.0,
             "shift_r_y": 0.0,
-            "x_scalar": 1.1,
+            "x_scalar": 0.77,
             "y_scalar": 1.0,
             "z_scalar": 0.55,
-            "z_shifting": 1.4472277290670614,
+            "z_shifting": 1.9017731836125158,
             "hand_confidence": 0.1,
             "enable_hand_auto_reset": true,
             "enable_hand_down": true,
@@ -180,7 +180,10 @@
             ],
             "pinky_min": 70,
             "pinky_max": 120
-        }
+        },
+        "enable": false,
+        "enable_hand_down": true,
+        "enable_finger_action": false
     },
     "Model": {
         "Face": {
@@ -198,5 +201,8 @@
             "min_pose_detection_confidence": 0.3,
             "model_provider": "DmlExecutionProvider"
         }
-    }
+    },
+    "only_ingame": false,
+    "flip_x": true,
+    "flip_y": false
 }
