@@ -3,7 +3,7 @@
 
 ## 用法
 打开飞鱼的exvr文档自己看嘛
-[TODO](https://exvr-doc.github.io/#/)
+[点我跳转](https://exvr-doc.github.io/#/)
 
 ## 按键设置
 ### 快捷键
