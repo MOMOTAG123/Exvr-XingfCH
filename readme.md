@@ -2,8 +2,8 @@
 为无VR玩家提供更好的体验
 
 ## 用法
-
-TODO
+打开飞鱼的exvr文档自己看嘛
+[TODO](https://exvr-doc.github.io/#/)
 
 ## 按键设置
 ### 快捷键
