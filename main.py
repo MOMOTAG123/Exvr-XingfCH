@@ -187,77 +187,262 @@ def init_globals():
     if not hasattr(g, 'update_configs'):
         g.update_configs = update_configs
 init_globals()
-UWP_STYLE_SHEET = """
+MODERN_STYLE_SHEET = """
 QWidget {
-    background-color: #F3F3F3;
+    background-color: #F5F7FA;
     font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
     font-size: 12px;
-    color: #1A1A1A;
+    color: #333333;
 }
+
 QMainWindow {
     background-color: #FFFFFF;
     border-radius: 8px;
 }
-QPushButton {
-    background-color: #EDEDED;
+
+QWidget#LeftMenu {
+    background-color: #2C3E50;
+    border-radius: 8px 0 0 8px;
+}
+
+QWidget#ContentArea {
+    background-color: #FFFFFF;
+    border-radius: 0 8px 8px 0;
+}
+
+QPushButton#MenuItem {
+    background-color: transparent;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #BDC3C7;
+    text-align: left;
+    margin: 4px 8px;
+}
+
+QPushButton#MenuItem:hover {
+    color: #FFFFFF;
+}
+
+QPushButton#MenuItem:pressed {
+    color: #FFFFFF;
+}
+
+QPushButton#MenuItem:checked {
+    color: #FFFFFF;
+}
+
+QPushButton {
+    background-color: #ECF0F1;
+    border: none;
+    border-radius: 6px;
     padding: 8px 16px;
     font-weight: 500;
     outline: none;
 }
+
 QPushButton:hover {
-    background-color: #E0E0E0;
+    background-color: #E0E6E8;
 }
+
 QPushButton:pressed {
-    background-color: #D0D0D0;
+    background-color: #D5DDE2;
 }
+
 QPushButton#PrimaryButton {
-    background-color: #0078D7;
+    background-color: #3498DB;
     color: white;
 }
+
 QPushButton#PrimaryButton:hover {
-    background-color: #1080E0;
+    background-color: #2980B9;
 }
+
 QCheckBox {
     spacing: 8px;
     outline: none;
 }
+
 QCheckBox::indicator {
     width: 18px;
     height: 18px;
     border-radius: 3px;
-    background-color: #EDEDED;
+    background-color: #ECF0F1;
+    border: 1px solid #BDC3C7;
+}
+
+QCheckBox::indicator:checked {
+    background-color: #3498DB;
+    border: 1px solid #3498DB;
+    image: url(:/qt-project.org/styles/commonstyle/images/checkbox_check.png);
+}
+
+QSlider::groove:horizontal {
+    height: 8px;
+    background-color: #E0E6E8;
+    border-radius: 4px;
+    margin: 4px 0;
+}
+
+QSlider::handle:horizontal {
+    width: 24px;
+    height: 24px;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #4A90E2, stop:1 #357ABD);
+    border-radius: 12px;
+    margin: -8px 0;
+    outline: none;
+    border: 2px solid #FFFFFF;
+}
+
+QSlider::handle:horizontal:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #5A9FF2, stop:1 #458AEB);
+}
+
+QSlider::handle:horizontal:pressed {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #2D68C4, stop:1 #1A57A8);
+}
+
+QComboBox {
+    background-color: #ECF0F1;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    outline: none;
+}
+
+QComboBox:hover {
+    background-color: #E0E6E8;
+}
+
+QLineEdit {
+    background-color: #FFFFFF;
+    border: 1px solid #BDC3C7;
+    border-radius: 6px;
+    padding: 8px 12px;
+    outline: none;
+}
+
+QLineEdit:focus {
+    border-color: #3498DB;
+}
+
+QLabel#StatusLabel {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+QFrame#Separator {
+    background-color: #E0E6E8;
+    height: 1px;
+}
+
+QScrollArea {
+    border: none;
+    background-color: transparent;
+}
+
+QWidget#ContentArea {
+    background-color: #FFFFFF;
+    border-radius: 0 8px 8px 0;
+}
+
+QScrollArea {
+    background-color: #FFFFFF;
+}
+QPushButton {
+    background-color: #FFFFFF;
+    border: 1px solid #DEE2E6;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 500;
+    outline: none;
+}
+QPushButton:hover {
+    background-color: #F8F9FA;
+    border-color: #CED4DA;
+}
+QPushButton:pressed {
+    background-color: #E9ECEF;
+}
+QPushButton#PrimaryButton {
+    background-color: #0078D7;
+    background: qlineargradient(135deg, #0078D7 0%, #005A9E 100%);
+    color: white;
+    border: none;
+}
+QPushButton#PrimaryButton:hover {
+    background: qlineargradient(135deg, #008EFB 0%, #006BC5 100%);
+}
+QPushButton#PrimaryButton:pressed {
+    background: qlineargradient(135deg, #006BC5 0%, #005A9E 100%);
+}
+QCheckBox {
+    spacing: 10px;
+    outline: none;
+}
+QCheckBox::indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    border: 2px solid #DEE2E6;
+}
+QCheckBox::indicator:hover {
+    border-color: #0078D7;
 }
 QCheckBox::indicator:checked {
     background-color: #0078D7;
+    border-color: #0078D7;
     image: url(:/qt-project.org/styles/commonstyle/images/checkbox_check.png);
 }
 QSlider::groove:horizontal {
-    height: 4px;
-    background-color: #E0E0E0;
-    border-radius: 2px;
+    height: 6px;
+    background-color: #E9ECEF;
+    border-radius: 3px;
 }
 QSlider::handle:horizontal {
-    width: 16px;
-    height: 16px;
-    background-color: #0078D7;
-    border-radius: 8px;
-    margin: -6px 0;
+    width: 20px;
+    height: 20px;
+    background-color: #FFFFFF;
+    border: 2px solid #0078D7;
+    border-radius: 50%;
+    margin: -7px 0;
     outline: none;
 }
+QSlider::handle:horizontal:hover {
+    border-color: #008EFB;
+}
 QComboBox {
-    background-color: #EDEDED;
-    border: none;
-    border-radius: 4px;
-    padding: 6px 12px;
+    background-color: #FFFFFF;
+    border: 1px solid #DEE2E6;
+    border-radius: 8px;
+    padding: 10px 16px;
     outline: none;
+}
+QComboBox:hover {
+    border-color: #CED4DA;
+}
+QComboBox:focus {
+    border-color: #0078D7;
+}
+QComboBox::drop-down {
+    border: none;
+    border-left: 1px solid #DEE2E6;
+    border-radius: 0 8px 8px 0;
+    width: 30px;
+}
+QComboBox::down-arrow {
+    image: url(:/qt-project.org/styles/commonstyle/images/down_arrow.png);
+    width: 16px;
+    height: 16px;
 }
 QLineEdit {
     background-color: #FFFFFF;
-    border: 1px solid #E0E0E0;
-    border-radius: 4px;
-    padding: 8px 12px;
+    border: 1px solid #DEE2E6;
+    border-radius: 8px;
+    padding: 10px 16px;
     outline: none;
 }
 QLineEdit:focus {
@@ -265,15 +450,51 @@ QLineEdit:focus {
 }
 QLabel#StatusLabel {
     font-weight: 600;
-    font-size: 13px;
+    font-size: 14px;
+    color: #0078D7;
 }
 QFrame#Separator {
-    background-color: #E0E0E0;
-    height: 1px;
+    background-color: #E9ECEF;
+    height: 2px;
+    border-radius: 1px;
 }
 QScrollArea {
     border: none;
     background-color: transparent;
+}
+QScrollBar:vertical {
+    width: 8px;
+    background: #F8F9FA;
+    border-radius: 4px;
+}
+QScrollBar::handle:vertical {
+    background: #CED4DA;
+    border-radius: 4px;
+    transition: background 0.2s ease-in-out;
+}
+QScrollBar::handle:vertical:hover {
+    background: #ADB5BD;
+}
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0;
+}
+QScrollBar:horizontal {
+    height: 8px;
+    background: #F8F9FA;
+    border-radius: 4px;
+}
+QScrollBar::handle:horizontal {
+    background: #CED4DA;
+    border-radius: 4px;
+    transition: background 0.2s ease-in-out;
+}
+QScrollBar::handle:horizontal:hover {
+    background: #ADB5BD;
+}
+QScrollBar::add-line:horizontal,
+QScrollBar::sub-line:horizontal {
+    width: 0;
 }
 """
 class LoadingScreen(QSplashScreen):
@@ -323,7 +544,6 @@ class LoadingScreen(QSplashScreen):
             event.accept()
 class VideoCaptureThread(QThread):
     frame_ready = pyqtSignal(QImage)
-
     def __init__(self, source,width=640, height=480, fps=60):
         super().__init__()
         self.source = source
@@ -347,116 +567,79 @@ class VideoCaptureThread(QThread):
         else:
             self.width, self.height = width, height
         self.fps = fps
-
     def run(self):
         try:
             if self.is_using_web_controller:
-                # 网页虚拟控制器模式，创建虚拟帧
                 rgb_image = np.zeros((self.height, self.width, 3), dtype=np.uint8)
-                
-                # 尝试加载Windows系统中的中文字体
-                font_path = "C:/Windows/Fonts/simhei.ttf"  # 黑体字体
-                font_scale = 1.5  # 增大字体缩放比例
-                font_thickness = 3  # 增加字体粗细
+                font_path = "C:/Windows/Fonts/simhei.ttf"
+                font_scale = 1.5
+                font_thickness = 3
                 text_color = (255, 255, 255)
-                
                 while self.is_running:
-                    # 创建黑色背景
                     rgb_image.fill(0)
-                    
-                    # 绘制连接IP信息
                     if self.controller_thread:
                         try:
                             ip_addresses = self.controller_thread.get_server_ip()
                             if ip_addresses:
-                                # 使用PIL绘制中文
                                 from PIL import Image, ImageDraw, ImageFont
-                                
-                                # 将OpenCV图像转换为PIL图像
                                 pil_image = Image.fromarray(rgb_image)
                                 draw = ImageDraw.Draw(pil_image)
-                                
                                 for i, (_, ip) in enumerate(ip_addresses):
                                     try:
-                                        # 加载字体，增大字体大小从14到20
                                         font = ImageFont.truetype(font_path, 20)
                                         draw.text(
-                                            (10, 10 + i*25), 
-                                            f"连接IP: {ip}", 
-                                            font=font, 
+                                            (10, 10 + i*25),
+                                            f"连接IP: {ip}",
+                                            font=font,
                                             fill=(0, 255, 0)
                                         )
                                     except Exception as e:
                                         print(f"绘制IP出错: {e}")
-                                        # 如果加载字体失败，使用默认字体显示英文
                                         cv2.putText(
-                                            rgb_image, 
-                                            f"IP: {ip}", 
-                                            (10, 30 + i*25), 
-                                            cv2.FONT_HERSHEY_SIMPLEX, 
-                                            1.0,  # 增大字体
-                                            (0, 255, 0), 
-                                            3,  # 增加粗细
+                                            rgb_image,
+                                            f"IP: {ip}",
+                                            (10, 30 + i*25),
+                                            cv2.FONT_HERSHEY_SIMPLEX,
+                                            1.0,
+                                            (0, 255, 0),
+                                            3,
                                             cv2.LINE_AA
                                         )
-                                
-                                # 将PIL图像转换回OpenCV图像
                                 rgb_image = np.array(pil_image)
                         except Exception as e:
                             print(f"绘制IP信息出错: {e}")
                             pass
-                    
-                    # 绘制网页控制参数
                     try:
-                        # 从控制器线程获取实时参数
                         control_params = self.controller_thread.current_control_params if hasattr(self.controller_thread, 'current_control_params') else {}
-                        
-                        # 获取左右控制器状态
                         left_controller = self.controller_thread.controllers.get("Left")
                         right_controller = self.controller_thread.controllers.get("Right")
-                        
-                        # 使用左右控制器的组合数据，优先使用有数据的控制器
                         active_controller = right_controller if right_controller else left_controller
-                        
-                        # 使用PIL绘制中文
                         from PIL import Image, ImageDraw, ImageFont
-                        
-                        # 将OpenCV图像转换为PIL图像
                         pil_image = Image.fromarray(rgb_image)
                         draw = ImageDraw.Draw(pil_image)
-                        
                         try:
-                            # 加载字体，增大字体大小从20到30
                             font = ImageFont.truetype(font_path, 30)
-                            
-                            # 显示滑块值
                             slider_value = control_params.get("slider", active_controller.slider if active_controller else 0.0)
                             draw.text(
-                                (20, 60), 
-                                f"滑块值: {slider_value:.2f}", 
-                                font=font, 
+                                (20, 60),
+                                f"滑块值: {slider_value:.2f}",
+                                font=font,
                                 fill=text_color
                             )
-                            
-                            # 显示摇杆位置
                             joystick = control_params.get("joystick", active_controller.joystick if active_controller else (0.0, 0.0))
                             draw.text(
-                                (20, 110), 
-                                f"摇杆: X={joystick[0]:.2f}, Y={joystick[1]:.2f}", 
-                                font=font, 
+                                (20, 110),
+                                f"摇杆: X={joystick[0]:.2f}, Y={joystick[1]:.2f}",
+                                font=font,
                                 fill=text_color
                             )
-                            
-                            # 显示旋钮位置
                             dial = control_params.get("dial", active_controller.dial if active_controller else (0.0, 0.0))
                             draw.text(
-                                (20, 160), 
-                                f"旋钮: X={dial[0]:.2f}, Y={dial[1]:.2f}", 
-                                font=font, 
+                                (20, 160),
+                                f"旋钮: X={dial[0]:.2f}, Y={dial[1]:.2f}",
+                                font=font,
                                 fill=text_color
                             )
-                            
-                            # 显示按钮状态
                             if active_controller and hasattr(active_controller, 'buttons'):
                                 buttons = active_controller.buttons
                                 if buttons:
@@ -464,85 +647,74 @@ class VideoCaptureThread(QThread):
                                     for btn_name, is_pressed in buttons.items():
                                         status = "按下" if is_pressed else "松开"
                                         draw.text(
-                                            (20, y_pos), 
-                                            f"{btn_name}: {status}", 
-                                            font=font, 
+                                            (20, y_pos),
+                                            f"{btn_name}: {status}",
+                                            font=font,
                                             fill=text_color
                                         )
-                                        y_pos += 60  # 增加行间距
-                            
-                            # 显示陀螺仪参数
+                                        y_pos += 60
                             if active_controller:
                                 y_pos = self.height - 200
                                 draw.text(
-                                    (20, y_pos), 
-                                    "陀螺仪参数:", 
-                                    font=font, 
+                                    (20, y_pos),
+                                    "陀螺仪参数:",
+                                    font=font,
                                     fill=text_color
                                 )
                                 draw.text(
-                                    (20, y_pos + 60), 
-                                    f"W: {active_controller.w:.2f}", 
-                                    font=font, 
+                                    (20, y_pos + 60),
+                                    f"W: {active_controller.w:.2f}",
+                                    font=font,
                                     fill=text_color
                                 )
                                 draw.text(
-                                    (20, y_pos + 120), 
-                                    f"X: {active_controller.x:.2f}", 
-                                    font=font, 
+                                    (20, y_pos + 120),
+                                    f"X: {active_controller.x:.2f}",
+                                    font=font,
                                     fill=text_color
                                 )
                                 draw.text(
-                                    (150, y_pos + 60), 
-                                    f"Y: {active_controller.y:.2f}", 
-                                    font=font, 
+                                    (150, y_pos + 60),
+                                    f"Y: {active_controller.y:.2f}",
+                                    font=font,
                                     fill=text_color
                                 )
                                 draw.text(
-                                    (150, y_pos + 120), 
-                                    f"Z: {active_controller.z:.2f}", 
-                                    font=font, 
+                                    (150, y_pos + 120),
+                                    f"Z: {active_controller.z:.2f}",
+                                    font=font,
                                     fill=text_color
                                 )
                         except Exception as e:
                             print(f"使用PIL绘制中文出错: {e}")
-                            # 如果PIL绘制失败，回退到OpenCV默认字体（仅显示英文）
                             font = cv2.FONT_HERSHEY_SIMPLEX
-                            
-                            # 显示滑块值
                             slider_value = control_params.get("slider", active_controller.slider if active_controller else 0.0)
                             cv2.putText(
-                                rgb_image, 
-                                f"Slider: {slider_value:.2f}", 
-                                (20, 60), 
-                                font, 
-                                font_scale, 
-                                text_color, 
-                                font_thickness, 
+                                rgb_image,
+                                f"Slider: {slider_value:.2f}",
+                                (20, 60),
+                                font,
+                                font_scale,
+                                text_color,
+                                font_thickness,
                                 cv2.LINE_AA
                             )
-                            
-                            # 显示摇杆位置
                             joystick = control_params.get("joystick", active_controller.joystick if active_controller else (0.0, 0.0))
                             cv2.putText(
-                                rgb_image, 
-                                f"Joystick: X={joystick[0]:.2f}, Y={joystick[1]:.2f}", 
-                                (20, 120), 
-                                font, 
-                                font_scale, 
-                                text_color, 
-                                font_thickness, 
+                                rgb_image,
+                                f"Joystick: X={joystick[0]:.2f}, Y={joystick[1]:.2f}",
+                                (20, 120),
+                                font,
+                                font_scale,
+                                text_color,
+                                font_thickness,
                                 cv2.LINE_AA
                             )
                     except Exception as e:
                         print(f"绘制控制参数出错: {e}")
                         pass
-                    
-                    # 处理虚拟帧
                     self.tracker.process_frames(rgb_image)
-                    
                     if self.show_image:
-                        rgb_image = cv2.resize(rgb_image, (640, 480))
                         h, w, ch = rgb_image.shape
                         bytes_per_line = ch * w
                         convert_to_Qt_format = QImage(
@@ -550,7 +722,6 @@ class VideoCaptureThread(QThread):
                         )
                         self.frame_ready.emit(convert_to_Qt_format)
             else:
-                # 普通摄像头模式
                 self.video_capture = cv2.VideoCapture(self.source, cv2.CAP_ANY)
                 self.video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
                 self.video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
@@ -567,7 +738,6 @@ class VideoCaptureThread(QThread):
                             rgb_image = cv2.flip(rgb_image, 1)
                         if g.config["Setting"]["flip_y"]:
                             rgb_image = cv2.flip(rgb_image, 0)
-
                         self.tracker.process_frames(rgb_image)
                         if self.show_image:
                             if g.config["Tracking"]["Head"]["enable"] or g.config["Tracking"]["Face"]["enable"]:
@@ -578,7 +748,6 @@ class VideoCaptureThread(QThread):
                                 rgb_image = draw_pose_landmarks(rgb_image)
                             if g.config["Tracking"]["Hand"]["enable"]:
                                 rgb_image = draw_hand_landmarks(rgb_image)
-                            rgb_image = cv2.resize(rgb_image, (640, 480))
                             h, w, ch = rgb_image.shape
                             bytes_per_line = ch * w
                             convert_to_Qt_format = QImage(
@@ -588,11 +757,9 @@ class VideoCaptureThread(QThread):
         except Exception as e:
             print(f"视频捕获线程出错: {e}")
         self.cleanup()
-
     def stop(self):
         self.is_running = False
         self.tracker.stop()
-
     def cleanup(self):
         if self.video_capture:
             self.video_capture.release()
@@ -602,212 +769,274 @@ class VideoWindow(QMainWindow):
         super().__init__()
         if splash_screen:
             splash_screen.update_status("初始化界面组件...")
-        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
-        QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-        font = QFont("Segoe UI", 12)
-        QApplication.setFont(font)
-        screen = QApplication.primaryScreen()
-        screen_rect = screen.availableGeometry()
-        min_width = max(800, screen_rect.width() // 2)
-        min_height = max(600, screen_rect.height() // 2)
-        self.setMinimumSize(min_width, min_height)
-        initial_width = min(1500, int(screen_rect.width() * 0.67))
-        initial_height = min(1400, int(screen_rect.height() * 0.67))
-        self.resize(initial_width, initial_height)
-        self.setWindowTitle(f"ExVR {g.config['Version']} - 体验虚拟现实&基于白初二改版")
-        if splash_screen:
-            splash_screen.update_status("创建界面布局...")
+        screen = QApplication.screens()[0]
+        screen_size = screen.size()
+        self.width = int(screen_size.width() * 0.8)
+        self.height = int(screen_size.height() * 0.7)
+        version=g.config["Version"]
+        self.setWindowTitle(
+            f"ExVR {version} - 体验虚拟现实(星芙芙ovo二改)"
+        )
+        self.resize(self.width, self.height)
+        self.setMinimumSize(800, 600)
+        self.setStyleSheet(MODERN_STYLE_SHEET)
         central_widget = QWidget(self)
-        central_widget.setStyleSheet(UWP_STYLE_SHEET)
         self.setCentralWidget(central_widget)
         main_layout = QHBoxLayout(central_widget)
-        main_layout.setSpacing(20)
-        main_layout.setContentsMargins(20, 20, 20, 20)
-        left_widget = QWidget()
-        left_widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        left_layout = QVBoxLayout(left_widget)
-        left_layout.setContentsMargins(0, 0, 0, 0)
-        left_layout.setSpacing(10)
-        self.image_label = QLabel()
-        self.image_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.image_label.setAlignment(Qt.AlignCenter)
-        self.image_label.setStyleSheet("background-color: #1A1A1A; border-radius: 8px;")
-        left_layout.addWidget(self.image_label)
-        camera_ctrl_layout = QHBoxLayout()
-        self.show_frame_button = QPushButton("显示画面")
-        self.show_frame_button.clicked.connect(self.toggle_video_display)
-        camera_ctrl_layout.addWidget(self.show_frame_button)
-        camera_ctrl_layout.addStretch()
-        left_layout.addLayout(camera_ctrl_layout)
-        main_layout.addWidget(left_widget, 6)
-        right_scroll = QScrollArea()
-        right_scroll.setWidgetResizable(True)
-        right_scroll.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Expanding)
-        right_widget = QWidget()
-        right_layout = QVBoxLayout(right_widget)
-        right_layout.setSpacing(15)
-        right_layout.setContentsMargins(10, 10, 10, 10)
-        self.steamvr_status_label = QLabel("检测SteamVR状态...")
-        self.steamvr_status_label.setObjectName("StatusLabel")
-        right_layout.addWidget(self.steamvr_status_label)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
+        left_menu = QWidget()
+        left_menu.setObjectName("LeftMenu")
+        left_menu.setFixedWidth(200)
+        left_menu_layout = QVBoxLayout(left_menu)
+        left_menu_layout.setContentsMargins(0, 16, 0, 16)
+        left_menu_layout.setSpacing(0)
+        exvr_label = QLabel("EXVR 0.7.2.5")
+        exvr_label.setStyleSheet("font-size: 24px; font-weight: bold; color: #FFFFFF; margin: 0 16px 24px 16px; background-color: transparent;")
+        exvr_label.setAlignment(Qt.AlignCenter)
+        left_menu_layout.addWidget(exvr_label)
+        self.main_menu_button = QPushButton("主界面")
+        self.main_menu_button.setObjectName("MenuItem")
+        self.main_menu_button.setCheckable(True)
+        self.main_menu_button.setChecked(True)
+        self.main_menu_button.clicked.connect(lambda: self.switch_page("main"))
+        self.main_menu_button.setStyleSheet("font-size: 16px; padding: 16px 20px; background-color: rgba(255, 255, 255, 0.1);")
+        left_menu_layout.addWidget(self.main_menu_button)
+        self.camera_menu_button = QPushButton("摄像头")
+        self.camera_menu_button.setObjectName("MenuItem")
+        self.camera_menu_button.setCheckable(True)
+        self.camera_menu_button.clicked.connect(lambda: self.switch_page("camera"))
+        left_menu_layout.addWidget(self.camera_menu_button)
+        left_menu_layout.addStretch()
+        content_area = QWidget()
+        content_area.setObjectName("ContentArea")
+        content_layout = QVBoxLayout(content_area)
+        content_layout.setContentsMargins(10, 10, 10, 10)
+        self.main_page = QWidget()
+        main_page_scroll = QScrollArea()
+        main_page_scroll.setWidgetResizable(True)
+        main_page_scroll_content = QWidget()
+        self.main_page_layout = QVBoxLayout(main_page_scroll_content)
+        self.main_page_layout.setContentsMargins(0, 0, 0, 0)
+        self.main_page_layout.setSpacing(16)
+        main_page_scroll.setWidget(main_page_scroll_content)
+        main_page_layout = QVBoxLayout(self.main_page)
+        main_page_layout.setContentsMargins(0, 0, 0, 0)
+        main_page_layout.addWidget(main_page_scroll)
+        if splash_screen:
+            splash_screen.update_status("创建界面布局...")
+        self.camera_page = QWidget()
+        self.camera_page_layout = QVBoxLayout(self.camera_page)
+        self.camera_page_layout.setContentsMargins(0, 0, 0, 0)
+        self.camera_page_layout.setSpacing(0)
+        self.camera_image_label = QLabel("请先追踪再来照镜子哦~")
+        self.camera_image_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.camera_image_label.setAlignment(Qt.AlignCenter)
+        self.camera_image_label.setStyleSheet("background-color: #F8F9FA; border-radius: 8px; font-size: 16px; color: #666666;")
+        self.camera_page_layout.addWidget(self.camera_image_label)
+        content_layout.addWidget(self.main_page)
+        content_layout.addWidget(self.camera_page)
+        content_layout.setStretch(0, 1)
+        content_layout.setStretch(1, 1)
+        self.camera_page.hide()
+        main_layout.addWidget(left_menu)
+        main_layout.addWidget(content_area, 1)
+        self.initialize_components()
         if splash_screen:
             splash_screen.update_status("初始化驱动按钮...")
-        self.install_button = QPushButton("检测驱动状态...")
-        self.install_button.clicked.connect(self.install_function)
-        right_layout.addWidget(self.install_button)
-        camera_config_group = QWidget()
-        camera_config_layout = QVBoxLayout(camera_config_group)
-        flip_layout = QHBoxLayout()
-        self.flip_x_checkbox = QCheckBox("水平翻转")
-        self.flip_x_checkbox.clicked.connect(lambda v: self.flip_x(v))
-        self.flip_x_checkbox.setChecked(g.config["Setting"]["flip_x"])
-        flip_layout.addWidget(self.flip_x_checkbox)
-        self.flip_y_checkbox = QCheckBox("垂直翻转")
-        self.flip_y_checkbox.clicked.connect(lambda v: self.flip_y(v))
-        self.flip_y_checkbox.setChecked(g.config["Setting"]["flip_y"])
-        flip_layout.addWidget(self.flip_y_checkbox)
-        camera_config_layout.addLayout(flip_layout)
-        self.ip_camera_tip_label = QLabel("📌 IP摄像头示例：rtsp://admin:123456@192.168.1.100:554/stream1 或 http://192.168.1.101:8080/video")
-        self.ip_camera_tip_label.setStyleSheet("color: #666666; font-size: 10px; margin-left: 4px; margin-top: 4px;")
-        self.ip_camera_tip_label.setWordWrap(True)
-        camera_config_layout.addWidget(self.ip_camera_tip_label)
-        camera_layout = QHBoxLayout()
-        self.camera_selection = QComboBox()
-        self.ip_camera_url_input = QLineEdit()
-        self.ip_camera_url_input.setPlaceholderText("输入网络IP摄像头地址")
-        self.ip_camera_url_input.textChanged.connect(lambda v: self.update_config("Setting", "camera_ip", v))
-        self.ip_camera_url_input.setText(g.config["Setting"]["camera_ip"])
-        camera_config_layout.addWidget(self.ip_camera_url_input)
-        self.ip_camera_tip_label = QLabel("📌 小提示：摄像头ID超过1000为MSMF格式/1000往下为DSHOW格式")
-        self.ip_camera_tip_label.setStyleSheet("color: #666666; font-size: 10px; margin-left: 4px; margin-top: 4px;")
-        self.ip_camera_tip_label.setWordWrap(True)
-        camera_config_layout.addWidget(self.ip_camera_tip_label)
-        camera_layout = QHBoxLayout()
-        self.camera_selection = QComboBox()
+        self.update_checkboxes()
+        self.update_sliders()
+        self.video_thread = None
+        self.controller_thread = None
         if splash_screen:
             splash_screen.update_status("检测摄像头设备...")
+    def initialize_components(self):
+        """初始化所有组件"""
+        self.steamvr_status_label = QLabel()
+        self.main_page_layout.insertWidget(0, self.steamvr_status_label)
+        self.ip_camera_tip_label = QLabel("📌 摄像头方向")
+        self.ip_camera_tip_label.setStyleSheet("font-size: 11px; color: #666666;")
+        self.main_page_layout.addWidget(self.ip_camera_tip_label)
+        flip_layout = QHBoxLayout()
+        self.flip_x_checkbox = QCheckBox("水平翻转", self)
+        self.flip_x_checkbox.clicked.connect(self.flip_x)
+        self.flip_x_checkbox.setChecked(g.config["Setting"]["flip_x"])
+        flip_layout.addWidget(self.flip_x_checkbox)
+        self.flip_y_checkbox = QCheckBox("垂直翻转", self)
+        self.flip_y_checkbox.clicked.connect(self.flip_y)
+        self.flip_y_checkbox.setChecked(g.config["Setting"]["flip_y"])
+        flip_layout.addWidget(self.flip_y_checkbox)
+        self.main_page_layout.addLayout(flip_layout)
+        self.ip_camera_tip_label = QLabel("📌 IP摄像头示例：rtsp://admin:123456@192.168.1.100:554/stream1 或 `http://192.168.1.101:8080/video` ")
+        self.ip_camera_tip_label.setStyleSheet("font-size: 11px; color: #666666;")
+        self.main_page_layout.addWidget(self.ip_camera_tip_label)
+        self.ip_camera_url_input = QLineEdit(self)
+        self.ip_camera_url_input.setPlaceholderText("输入IP摄像头URL")
+        self.ip_camera_url_input.textChanged.connect(self.update_camera_ip)
+        self.ip_camera_url_input.setText(g.config["Setting"].get("camera_ip", ""))
+        self.main_page_layout.addWidget(self.ip_camera_url_input)
+        self.camera_id_tip_label = QLabel("📌 小提示：摄像头ID超过1000为MSMF格式/1000往下为DSHOW格式")
+        self.camera_id_tip_label.setStyleSheet("font-size: 11px; color: #666666;")
+        self.main_page_layout.addWidget(self.camera_id_tip_label)
+        camera_layout = QHBoxLayout()
+        self.camera_selection = QComboBox(self)
         self.populate_camera_list()
-        self.camera_selection.currentIndexChanged.connect(self.update_camera)
         camera_layout.addWidget(self.camera_selection)
-        self.camera_resolution_selection = QComboBox()
+        self.camera_resolution_selection = QComboBox(self)
         self.populate_resolution_list()
         self.camera_resolution_selection.currentIndexChanged.connect(self.update_camera_resolution)
         camera_layout.addWidget(self.camera_resolution_selection)
-        self.camera_fps_selection = QComboBox()
+        self.camera_fps_selection = QComboBox(self)
         self.populate_fps_list()
         self.camera_fps_selection.currentIndexChanged.connect(self.update_camera_fps)
         camera_layout.addWidget(self.camera_fps_selection)
-        camera_config_layout.addLayout(camera_layout)
-        self.ip_camera_tip_label = QLabel("小提示：这是设置本程序优先级的")
-        self.ip_camera_tip_label.setStyleSheet("color: #666666; font-size: 10px; margin-left: 4px; margin-top: 4px;")
-        self.ip_camera_tip_label.setWordWrap(True)
-        camera_config_layout.addWidget(self.ip_camera_tip_label)
-        self.priority_selection = QComboBox()
-        priority_list = ["空闲优先级", "低于普通优先级", "普通优先级", "高于普通优先级", "高优先级", "实时优先级"]
-        self.priority_selection.addItems(priority_list)
-        self.priority_selection.currentIndexChanged.connect(self.set_process_priority)
-        priority_mapping = {
-            "IDLE_PRIORITY_CLASS": 0,
-            "BELOW_NORMAL_PRIORITY_CLASS": 1,
-            "NORMAL_PRIORITY_CLASS": 2,
-            "ABOVE_NORMAL_PRIORITY_CLASS": 3,
-            "HIGH_PRIORITY_CLASS": 4,
-            "REALTIME_PRIORITY_CLASS": 5
+        self.main_page_layout.addLayout(camera_layout)
+        self.priority_tip_label = QLabel("📌 小提示：这是设置本程序优先级的")
+        self.priority_tip_label.setStyleSheet("font-size: 11px; color: #666666;")
+        self.main_page_layout.addWidget(self.priority_tip_label)
+        self.priority_selection = QComboBox(self)
+        self.priority_mapping = {
+            "最低优先级": "IDLE_PRIORITY_CLASS",
+            "低于正常": "BELOW_NORMAL_PRIORITY_CLASS",
+            "正常优先级": "NORMAL_PRIORITY_CLASS",
+            "高于正常": "ABOVE_NORMAL_PRIORITY_CLASS",
+            "高优先级": "HIGH_PRIORITY_CLASS",
+            "实时优先级": "REALTIME_PRIORITY_CLASS"
         }
-        self.priority_selection.setCurrentIndex(priority_mapping[g.config["Setting"]["priority"]])
-        camera_config_layout.addWidget(self.priority_selection)
-        right_layout.addWidget(camera_config_group)
-        separator = QFrame()
-        separator.setObjectName("Separator")
-        separator.setFrameShape(QFrame.HLine)
-        right_layout.addWidget(separator)
+        self.priority_selection.addItems(list(self.priority_mapping.keys()))
+        self.priority_selection.currentIndexChanged.connect(self.set_process_priority)
+        self.main_page_layout.addWidget(self.priority_selection)
+        current_priority = g.config["Setting"]["priority"]
+        for cn_name, en_name in self.priority_mapping.items():
+            if en_name == current_priority:
+                self.priority_selection.setCurrentText(cn_name)
+                break
+        self.install_state, steamvr_driver_path, vrcfacetracking_path, check_steamvr_path = self.install_checking()
+        if check_steamvr_path is not None:
+            self.steamvr_status_label.setText("SteamVR已安装")
+            self.steamvr_status_label.setStyleSheet("color: green; font-weight: bold;")
+        else:
+            self.steamvr_status_label.setText("SteamVR未安装")
+            self.steamvr_status_label.setStyleSheet("color: red; font-weight: bold;")
+        if self.install_state:
+            self.install_button = QPushButton("卸载驱动", self)
+        else:
+            self.install_button = QPushButton("安装驱动", self)
+            self.install_button.setStyleSheet("QPushButton { background-color: #3498DB; color: white; }")
+        self.install_button.clicked.connect(self.install_function)
+        self.main_page_layout.addWidget(self.install_button)
+        self.toggle_button = QPushButton("开始追踪", self)
+        self.toggle_button.setStyleSheet("QPushButton { background-color: #27AE60; color: white; }")
+        self.toggle_button.clicked.connect(self.toggle_camera)
+        self.main_page_layout.addWidget(self.toggle_button)
         only_ingame_layout = QHBoxLayout()
-        self.only_ingame_checkbox = QCheckBox("仅在游戏内生效：")
-        self.only_ingame_checkbox.clicked.connect(lambda v: self.update_config("Setting", "only_ingame", v))
+        self.only_ingame_checkbox = QCheckBox("仅在游戏中", self)
+        self.only_ingame_checkbox.clicked.connect(lambda: self.toggle_only_in_game(self.only_ingame_checkbox.isChecked()))
         self.only_ingame_checkbox.setChecked(g.config["Setting"]["only_ingame"])
-        only_ingame_layout.addWidget(self.only_ingame_checkbox)
-        self.only_ingame_game_input = QLineEdit()
-        self.only_ingame_game_input.setPlaceholderText("窗口标题/进程名（用于启动指定程序）")
-        self.only_ingame_game_input.textChanged.connect(lambda v: self.update_config("Setting", "only_ingame_game", v))
+        self.only_ingame_checkbox.setToolTip("目前仅适用于热键和鼠标输入，不适用于头部移动")
+        self.only_ingame_game_input = QLineEdit(self)
+        self.only_ingame_game_input.setPlaceholderText("窗口标题 / 进程名称 / VRChat, VRChat.exe, javaw.exe")
+        self.only_ingame_game_input.textChanged.connect(self.update_mouse_only_in_game_name)
         self.only_ingame_game_input.setText(g.config["Setting"]["only_ingame_game"])
+        only_ingame_layout.addWidget(self.only_ingame_checkbox)
         only_ingame_layout.addWidget(self.only_ingame_game_input)
-        right_layout.addLayout(only_ingame_layout)
+        self.main_page_layout.addLayout(only_ingame_layout)
+        separator_0 = QFrame()
+        separator_0.setFrameShape(QFrame.HLine)
+        separator_0.setFrameShadow(QFrame.Sunken)
+        self.main_page_layout.addWidget(separator_0)
         reset_layout = QHBoxLayout()
-        self.reset_head = QPushButton("重置头部")
+        self.reset_head = QPushButton("重置头部", self)
         self.reset_head.clicked.connect(reset_head)
         reset_layout.addWidget(self.reset_head)
-        self.reset_eyes = QPushButton("重置眼睛")
+        self.reset_eyes = QPushButton("重置眼睛", self)
         self.reset_eyes.clicked.connect(reset_eye)
         reset_layout.addWidget(self.reset_eyes)
-        self.reset_l_hand = QPushButton("重置左手")
+        self.reset_l_hand = QPushButton("重置左手", self)
         self.reset_l_hand.clicked.connect(lambda: reset_hand(True))
         reset_layout.addWidget(self.reset_l_hand)
-        self.reset_r_hand = QPushButton("重置右手")
+        self.reset_r_hand = QPushButton("重置右手", self)
         self.reset_r_hand.clicked.connect(lambda: reset_hand(False))
         reset_layout.addWidget(self.reset_r_hand)
-        right_layout.addLayout(reset_layout)
-        tracking_layout = QHBoxLayout()
-        self.checkbox1 = QCheckBox("头部追踪")
-        self.checkbox1.clicked.connect(lambda: self.set_tracking_config("Head", self.checkbox1.isChecked()))
-        self.checkbox1.setChecked(g.config["Tracking"]["Head"]["enable"])
-        tracking_layout.addWidget(self.checkbox1)
-        self.checkbox2 = QCheckBox("面部追踪")
-        self.checkbox2.clicked.connect(lambda: self.set_tracking_config("Face", self.checkbox2.isChecked()))
-        self.checkbox2.setChecked(g.config["Tracking"]["Face"]["enable"])
-        tracking_layout.addWidget(self.checkbox2)
-        self.checkbox3 = QCheckBox("舌头追踪")
-        self.checkbox3.clicked.connect(lambda: self.set_tracking_config("Tongue", self.checkbox3.isChecked()))
-        self.checkbox3.setChecked(g.config["Tracking"]["Tongue"]["enable"])
-        tracking_layout.addWidget(self.checkbox3)
-        self.checkbox4 = QCheckBox("手部追踪")
-        self.checkbox4.clicked.connect(lambda: self.set_tracking_config("Hand", self.checkbox4.isChecked()))
-        self.checkbox4.setChecked(g.config["Tracking"]["Hand"]["enable"])
-        tracking_layout.addWidget(self.checkbox4)
-        self.checkbox5 = QCheckBox("姿态追踪")
-        self.checkbox5.clicked.connect(lambda: self.set_tracking_config("Pose", self.checkbox5.isChecked()))
-        self.checkbox5.setChecked(g.config["Tracking"]["Pose"]["enable"])
-        tracking_layout.addWidget(self.checkbox5)
-        right_layout.addLayout(tracking_layout)
-        hand_ext_layout = QHBoxLayout()
-        self.checkbox6 = QCheckBox("手部下垂检测")
-        self.checkbox6.clicked.connect(lambda: self.toggle_hand_down(self.checkbox6.isChecked()))
-        self.checkbox6.setChecked(g.config["Tracking"]["Hand"]["enable_hand_down"])
-        hand_ext_layout.addWidget(self.checkbox6)
-        self.checkbox7 = QCheckBox("手指动作识别")
-        self.checkbox7.clicked.connect(lambda: self.toggle_finger_action(self.checkbox7.isChecked()))
-        self.checkbox7.setChecked(g.config["Tracking"]["Hand"]["enable_finger_action"])
-        hand_ext_layout.addWidget(self.checkbox7)
-        right_layout.addLayout(hand_ext_layout)
-        hand_slider_layout = QHBoxLayout()
+        self.main_page_layout.addLayout(reset_layout)
+        checkbox_layout = QHBoxLayout()
+        self.checkbox1 = QCheckBox("头部", self)
+        self.checkbox1.clicked.connect(
+            lambda: self.set_tracking_config("Head", self.checkbox1.isChecked())
+        )
+        checkbox_layout.addWidget(self.checkbox1)
+        self.checkbox2 = QCheckBox("面部", self)
+        self.checkbox2.clicked.connect(
+            lambda: self.set_tracking_config("Face", self.checkbox2.isChecked())
+        )
+        checkbox_layout.addWidget(self.checkbox2)
+        self.checkbox3 = QCheckBox("舌头", self)
+        self.checkbox3.clicked.connect(
+            lambda: self.set_tracking_config("Tongue", self.checkbox3.isChecked())
+        )
+        checkbox_layout.addWidget(self.checkbox3)
+        self.checkbox4 = QCheckBox("手部", self)
+        self.checkbox4.clicked.connect(
+            lambda: self.set_tracking_config("Hand", self.checkbox4.isChecked())
+        )
+        checkbox_layout.addWidget(self.checkbox4)
+        self.checkbox5 = QCheckBox("姿态", self)
+        self.checkbox5.clicked.connect(
+            lambda: self.set_tracking_config("Pose", self.checkbox5.isChecked())
+        )
+        checkbox_layout.addWidget(self.checkbox5)
+        self.main_page_layout.addLayout(checkbox_layout)
+        checkbox_layout_1 = QHBoxLayout()
+        self.checkbox6 = QCheckBox("手部放下", self)
+        self.checkbox6.clicked.connect(
+            lambda: self.toggle_hand_down(self.checkbox6.isChecked())
+        )
+        checkbox_layout_1.addWidget(self.checkbox6)
+        self.checkbox7 = QCheckBox("手指动作", self)
+        self.checkbox7.clicked.connect(
+            lambda: self.toggle_finger_action(self.checkbox7.isChecked())
+        )
+        checkbox_layout_1.addWidget(self.checkbox7)
+        self.main_page_layout.addLayout(checkbox_layout_1)
+        slider_layout = QHBoxLayout()
         self.slider1 = QSlider(Qt.Horizontal)
         self.slider2 = QSlider(Qt.Horizontal)
         self.slider3 = QSlider(Qt.Horizontal)
         self.slider1.setRange(1, 200)
         self.slider2.setRange(1, 200)
         self.slider3.setRange(1, 100)
+        self.slider1.setSingleStep(1)
+        self.slider2.setSingleStep(1)
+        self.slider3.setSingleStep(1)
         self.label1 = QLabel(f"x {g.config['Tracking']['Hand']['x_scalar']:.2f}")
         self.label2 = QLabel(f"y {g.config['Tracking']['Hand']['y_scalar']:.2f}")
         self.label3 = QLabel(f"z {g.config['Tracking']['Hand']['z_scalar']:.2f}")
-        self.slider1.valueChanged.connect(lambda v: self.set_scalar(v, "x"))
-        self.slider2.valueChanged.connect(lambda v: self.set_scalar(v, "y"))
-        self.slider3.valueChanged.connect(lambda v: self.set_scalar(v, "z"))
-        hand_slider_layout.addWidget(self.label1)
-        hand_slider_layout.addWidget(self.slider1)
-        hand_slider_layout.addWidget(self.label2)
-        hand_slider_layout.addWidget(self.slider2)
-        hand_slider_layout.addWidget(self.label3)
-        hand_slider_layout.addWidget(self.slider3)
-        right_layout.addLayout(hand_slider_layout)
-        controller_layout = QHBoxLayout()
-        self.controller_checkbox1 = QCheckBox("左手控制器")
-        self.controller_checkbox1.clicked.connect(lambda: self.set_tracking_config("LeftController", self.controller_checkbox1.isChecked()))
-        self.controller_checkbox1.setChecked(g.config["Tracking"]["LeftController"]["enable"])
-        controller_layout.addWidget(self.controller_checkbox1)
-        self.controller_checkbox2 = QCheckBox("右手控制器")
-        self.controller_checkbox2.clicked.connect(lambda: self.set_tracking_config("RightController", self.controller_checkbox2.isChecked()))
-        self.controller_checkbox2.setChecked(g.config["Tracking"]["RightController"]["enable"])
-        controller_layout.addWidget(self.controller_checkbox2)
-        right_layout.addLayout(controller_layout)
+        self.slider1.valueChanged.connect(lambda value: self.set_scalar(value, "x"))
+        self.slider2.valueChanged.connect(lambda value: self.set_scalar(value, "y"))
+        self.slider3.valueChanged.connect(lambda value: self.set_scalar(value, "z"))
+        slider_layout.addWidget(self.label1)
+        slider_layout.addWidget(self.slider1)
+        slider_layout.addWidget(self.label2)
+        slider_layout.addWidget(self.slider2)
+        slider_layout.addWidget(self.label3)
+        slider_layout.addWidget(self.slider3)
+        self.main_page_layout.addLayout(slider_layout)
+        separator_1 = QFrame()
+        separator_1.setFrameShape(QFrame.HLine)
+        separator_1.setFrameShadow(QFrame.Sunken)
+        self.main_page_layout.addWidget(separator_1)
+        controller_checkbox_layout = QHBoxLayout()
+        self.controller_checkbox1 = QCheckBox("左手控制器", self)
+        self.controller_checkbox1.clicked.connect(
+            lambda: self.set_tracking_config("LeftController", self.controller_checkbox1.isChecked())
+        )
+        self.controller_checkbox2 = QCheckBox("右手控制器", self)
+        self.controller_checkbox2.clicked.connect(
+            lambda: self.set_tracking_config("RightController", self.controller_checkbox2.isChecked())
+        )
+        controller_checkbox_layout.addWidget(self.controller_checkbox1)
+        controller_checkbox_layout.addWidget(self.controller_checkbox2)
+        self.main_page_layout.addLayout(controller_checkbox_layout)
         controller_slider_layout = QHBoxLayout()
         self.controller_slider_x = QSlider(Qt.Horizontal)
         self.controller_slider_y = QSlider(Qt.Horizontal)
@@ -817,14 +1046,18 @@ class VideoWindow(QMainWindow):
         self.controller_slider_y.setRange(-50, 50)
         self.controller_slider_z.setRange(-50, 50)
         self.controller_slider_l.setRange(0, 100)
+        self.controller_slider_x.setSingleStep(1)
+        self.controller_slider_y.setSingleStep(1)
+        self.controller_slider_z.setSingleStep(1)
+        self.controller_slider_l.setSingleStep(1)
         self.controller_label_x = QLabel(f"x {g.config['Tracking']['LeftController']['base_x']:.2f}")
         self.controller_label_y = QLabel(f"y {g.config['Tracking']['LeftController']['base_y']:.2f}")
         self.controller_label_z = QLabel(f"z {g.config['Tracking']['LeftController']['base_z']:.2f}")
         self.controller_label_l = QLabel(f"l {g.config['Tracking']['LeftController']['length']:.2f}")
-        self.controller_slider_x.valueChanged.connect(lambda v: self.set_scalar(v, "controller_x"))
-        self.controller_slider_y.valueChanged.connect(lambda v: self.set_scalar(v, "controller_y"))
-        self.controller_slider_z.valueChanged.connect(lambda v: self.set_scalar(v, "controller_z"))
-        self.controller_slider_l.valueChanged.connect(lambda v: self.set_scalar(v, "controller_l"))
+        self.controller_slider_x.valueChanged.connect(lambda value: self.set_scalar(value, "controller_x"))
+        self.controller_slider_y.valueChanged.connect(lambda value: self.set_scalar(value, "controller_y"))
+        self.controller_slider_z.valueChanged.connect(lambda value: self.set_scalar(value, "controller_z"))
+        self.controller_slider_l.valueChanged.connect(lambda value: self.set_scalar(value, "controller_l"))
         controller_slider_layout.addWidget(self.controller_label_x)
         controller_slider_layout.addWidget(self.controller_slider_x)
         controller_slider_layout.addWidget(self.controller_label_y)
@@ -833,67 +1066,86 @@ class VideoWindow(QMainWindow):
         controller_slider_layout.addWidget(self.controller_slider_z)
         controller_slider_layout.addWidget(self.controller_label_l)
         controller_slider_layout.addWidget(self.controller_slider_l)
-        right_layout.addLayout(controller_slider_layout)
+        self.main_page_layout.addLayout(controller_slider_layout)
+        separator_2 = QFrame()
+        separator_2.setFrameShape(QFrame.HLine)
+        separator_2.setFrameShadow(QFrame.Sunken)
+        self.main_page_layout.addWidget(separator_2)
         mouse_layout = QHBoxLayout()
-        self.mouse_checkbox = QCheckBox("鼠标控制")
+        self.mouse_checkbox = QCheckBox("鼠标", self)
         self.mouse_checkbox.clicked.connect(lambda: self.toggle_mouse(self.mouse_checkbox.isChecked()))
         self.mouse_checkbox.setChecked(g.config["Mouse"]["enable"])
-        mouse_layout.addWidget(self.mouse_checkbox)
         self.mouse_slider_x = QSlider(Qt.Horizontal)
         self.mouse_slider_y = QSlider(Qt.Horizontal)
         self.mouse_slider_dx = QSlider(Qt.Horizontal)
         self.mouse_slider_x.setRange(0, 360)
         self.mouse_slider_y.setRange(0, 360)
         self.mouse_slider_dx.setRange(0, 20)
+        self.mouse_slider_x.setSingleStep(1)
+        self.mouse_slider_y.setSingleStep(1)
+        self.mouse_slider_dx.setSingleStep(1)
         self.mouse_label_x = QLabel(f"x {int(g.config['Mouse']['scalar_x']*100)}")
         self.mouse_label_y = QLabel(f"y {int(g.config['Mouse']['scalar_y']*100)}")
         self.mouse_label_dx = QLabel(f"dx {g.config['Mouse']['dx']:.2f}")
-        self.mouse_slider_x.valueChanged.connect(lambda v: self.set_scalar(v, "mouse_x"))
-        self.mouse_slider_y.valueChanged.connect(lambda v: self.set_scalar(v, "mouse_y"))
-        self.mouse_slider_dx.valueChanged.connect(lambda v: self.set_scalar(v, "mouse_dx"))
+        self.mouse_slider_x.valueChanged.connect(lambda value: self.set_scalar(value, "mouse_x"))
+        self.mouse_slider_y.valueChanged.connect(lambda value: self.set_scalar(value, "mouse_y"))
+        self.mouse_slider_dx.valueChanged.connect(lambda value: self.set_scalar(value, "mouse_dx"))
+        mouse_layout.addWidget(self.mouse_checkbox)
         mouse_layout.addWidget(self.mouse_label_x)
         mouse_layout.addWidget(self.mouse_slider_x)
         mouse_layout.addWidget(self.mouse_label_y)
         mouse_layout.addWidget(self.mouse_slider_y)
         mouse_layout.addWidget(self.mouse_label_dx)
         mouse_layout.addWidget(self.mouse_slider_dx)
-        right_layout.addLayout(mouse_layout)
+        self.main_page_layout.addLayout(mouse_layout)
+        separator_3 = QFrame()
+        separator_3.setFrameShape(QFrame.HLine)
+        separator_3.setFrameShadow(QFrame.Sunken)
+        self.main_page_layout.addWidget(separator_3)
         config_layout = QHBoxLayout()
-        self.reset_hotkey_button = QPushButton("重置热键")
+        self.reset_hotkey_button = QPushButton("重置热键", self)
         self.reset_hotkey_button.clicked.connect(self.reset_hotkeys)
         config_layout.addWidget(self.reset_hotkey_button)
-        self.stop_hotkey_button = QPushButton("停止热键")
+        self.stop_hotkey_button = QPushButton("停止热键", self)
         self.stop_hotkey_button.clicked.connect(stop_hotkeys)
         config_layout.addWidget(self.stop_hotkey_button)
-        self.set_face_button = QPushButton("面部设置")
+        self.set_face_button = QPushButton("设置面部", self)
         self.set_face_button.clicked.connect(self.face_dialog)
         config_layout.addWidget(self.set_face_button)
-        self.update_config_button = QPushButton("更新配置")
-        self.update_config_button.clicked.connect(self.on_update_config)
+        self.update_config_button = QPushButton("更新配置", self)
+        self.update_config_button.clicked.connect(lambda:(g.update_configs(),self.update_checkboxes(), self.update_sliders()))
         config_layout.addWidget(self.update_config_button)
-        self.save_config_button = QPushButton("保存配置")
+        self.save_config_button = QPushButton("保存配置", self)
         self.save_config_button.clicked.connect(g.save_configs)
         config_layout.addWidget(self.save_config_button)
-        right_layout.addLayout(config_layout)
-        self.toggle_button = QPushButton("开始追踪")
-        self.toggle_button.setObjectName("PrimaryButton")
-        self.toggle_button.setMinimumHeight(40)
-        self.toggle_button.clicked.connect(self.toggle_camera)
-        right_layout.addWidget(self.toggle_button)
-        right_layout.addStretch()
-        right_scroll.setWidget(right_widget)
-        main_layout.addWidget(right_scroll, 4)
-        self.update_sliders()
-        if splash_screen:
-            splash_screen.update_status("检测SteamVR状态...")
-        self.check_steamvr_status()
-        if splash_screen:
-            splash_screen.update_status("检测驱动状态...")
-        self.check_driver_status_on_startup()
-        self.video_thread = None
-        self.controller_thread = None
-        if splash_screen:
-            splash_screen.update_status("")
+        self.main_page_layout.addLayout(config_layout)
+    def switch_page(self, page_name):
+        """切换页面"""
+        if page_name == "main":
+            self.main_menu_button.setChecked(True)
+            self.camera_menu_button.setChecked(False)
+            self.main_page.show()
+            self.camera_page.hide()
+            self.main_menu_button.setStyleSheet("font-size: 16px; padding: 16px 20px; background-color: rgba(255, 255, 255, 0.1);")
+            self.camera_menu_button.setStyleSheet("")
+            if hasattr(self, 'video_thread') and self.video_thread and self.video_thread.show_image:
+                self.video_thread.show_image = False
+                print("已隐藏画面显示")
+                self.camera_image_label.clear()
+                self.camera_image_label.setText("请先追踪再来照镜子哦~")
+                self.camera_image_label.setStyleSheet("background-color: #F8F9FA; border-radius: 8px; font-size: 16px; color: #666666;")
+        elif page_name == "camera":
+            self.main_menu_button.setChecked(False)
+            self.camera_menu_button.setChecked(True)
+            self.main_page.hide()
+            self.camera_page.show()
+            self.camera_menu_button.setStyleSheet("font-size: 16px; padding: 16px 20px; background-color: rgba(255, 255, 255, 0.1);")
+            self.main_menu_button.setStyleSheet("")
+            if hasattr(self, 'video_thread') and self.video_thread and not self.video_thread.show_image:
+                self.video_thread.show_image = True
+                print("已启用画面显示")
+                self.camera_image_label.setText("追踪中...")
+                self.camera_image_label.setStyleSheet("background-color: #F8F9FA; border-radius: 8px; font-size: 16px; color: #666666;")
     def update_config(self, path, key, value):
         parts = path.split('/')
         config = g.config
@@ -907,6 +1159,12 @@ class VideoWindow(QMainWindow):
     def flip_y(self, value):
         g.config["Setting"]["flip_y"] = value
         g.save_configs()
+    def update_camera_ip(self, value):
+        g.config["Setting"]["camera_ip"] = value
+    def toggle_only_in_game(self, value):
+        g.config["Setting"]["only_ingame"] = value
+    def update_mouse_only_in_game_name(self, value):
+        g.config["Setting"]["only_ingame_game"] = value
     def set_tracking_config(self, key, value):
         if key in g.config["Tracking"]:
             g.config["Tracking"][key]["enable"] = value
@@ -924,6 +1182,50 @@ class VideoWindow(QMainWindow):
     def toggle_mouse(self, value):
         g.config["Mouse"]["enable"] = value
         g.save_configs()
+    def update_checkboxes(self):
+        self.flip_x_checkbox.setChecked(g.config["Setting"]["flip_x"])
+        self.flip_y_checkbox.setChecked(g.config["Setting"]["flip_y"])
+        self.checkbox1.setChecked(g.config["Tracking"]["Head"]["enable"])
+        self.checkbox2.setChecked(g.config["Tracking"]["Face"]["enable"])
+        self.checkbox3.setChecked(g.config["Tracking"]["Tongue"]["enable"])
+        self.checkbox4.setChecked(g.config["Tracking"]["Hand"]["enable"])
+        self.checkbox5.setChecked(g.config["Tracking"]["Pose"]["enable"])
+        self.checkbox6.setChecked(g.config["Tracking"]["Hand"]["enable_hand_down"])
+        self.checkbox7.setChecked(g.config["Tracking"]["Hand"]["enable_finger_action"])
+        self.controller_checkbox1.setChecked(g.config["Tracking"]["LeftController"]["enable"])
+        self.controller_checkbox2.setChecked(g.config["Tracking"]["RightController"]["enable"])
+        self.mouse_checkbox.setChecked(g.config["Mouse"]["enable"])
+    def update_sliders(self):
+        x_scalar = g.config["Tracking"]["Hand"]["x_scalar"]
+        y_scalar = g.config["Tracking"]["Hand"]["y_scalar"]
+        z_scalar = g.config["Tracking"]["Hand"]["z_scalar"]
+        self.slider1.setValue(int(x_scalar * 100))
+        self.slider2.setValue(int(y_scalar * 100))
+        self.slider3.setValue(int(z_scalar * 100))
+        self.label1.setText(f"x {x_scalar:.2f}")
+        self.label2.setText(f"y {y_scalar:.2f}")
+        self.label3.setText(f"z {z_scalar:.2f}")
+        controller_x = g.config["Tracking"]["LeftController"]["base_x"]
+        controller_y = g.config["Tracking"]["LeftController"]["base_y"]
+        controller_z = g.config["Tracking"]["LeftController"]["base_z"]
+        controller_l = g.config["Tracking"]["LeftController"]["length"]
+        self.controller_slider_x.setValue(int(controller_x * 100))
+        self.controller_slider_y.setValue(int(controller_y * 100))
+        self.controller_slider_z.setValue(int(controller_z * 100))
+        self.controller_slider_l.setValue(int(controller_l * 100))
+        self.controller_label_x.setText(f"x {controller_x:.2f}")
+        self.controller_label_y.setText(f"y {controller_y:.2f}")
+        self.controller_label_z.setText(f"z {controller_z:.2f}")
+        self.controller_label_l.setText(f"l {controller_l:.2f}")
+        mouse_x = g.config["Mouse"]["scalar_x"] / 100
+        mouse_y = g.config["Mouse"]["scalar_y"] / 100
+        mouse_dx = g.config["Mouse"]["dx"]
+        self.mouse_slider_x.setValue(int(mouse_x))
+        self.mouse_slider_y.setValue(int(mouse_y))
+        self.mouse_slider_dx.setValue(int(mouse_dx))
+        self.mouse_label_x.setText(f"x {int(mouse_x * 100)}")
+        self.mouse_label_y.setText(f"y {int(mouse_y * 100)}")
+        self.mouse_label_dx.setText(f"dx {mouse_dx:.2f}")
     def set_scalar(self, value, axis):
         if axis == "x":
             val = value / 100.0
@@ -1162,6 +1464,9 @@ class VideoWindow(QMainWindow):
                 self.video_thread.show_image = False
                 self.video_thread.start()
                 self.toggle_button.setText("停止追踪")
+                self.camera_image_label.clear()
+                self.camera_image_label.setText("追踪中...")
+                self.camera_image_label.setStyleSheet("background-color: #F8F9FA; border-radius: 8px; font-size: 16px; color: #666666;")
                 if self.is_using_web_controller and self.controller_thread:
                     QMessageBox.information(self, "提示", f"追踪已开始\n网页虚拟控制器已启动\n请使用浏览器访问：{', '.join([f'https://{ip[1]}' for ip in self.controller_thread.get_server_ip()])}")
                 else:
@@ -1191,28 +1496,17 @@ class VideoWindow(QMainWindow):
             return
         self.video_thread.show_image = not self.video_thread.show_image
         if self.video_thread.show_image:
-            self.show_frame_button.setText("隐藏画面")
             print("已启用画面显示")
         else:
-            self.show_frame_button.setText("显示画面")
-            self.image_label.setPixmap(QPixmap())
             print("已隐藏画面显示")
         self.update_frame(QImage())
     def update_frame(self, image):
         if self.video_thread and self.video_thread.show_image:
             if not image.isNull():
-                scaled = image.scaled(self.image_label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
-                self.image_label.setPixmap(QPixmap.fromImage(scaled))
+                scaled = image.scaled(self.camera_image_label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                self.camera_image_label.setPixmap(QPixmap.fromImage(scaled))
             else:
                 pass
-    def resizeEvent(self, event):
-        super().resizeEvent(event)
-        if hasattr(self, 'image_label') and self.image_label.pixmap():
-            current_pixmap = self.image_label.pixmap()
-            if not current_pixmap.isNull():
-                image = current_pixmap.toImage()
-                scaled = image.scaled(self.image_label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
-                self.image_label.setPixmap(QPixmap.fromImage(scaled))
     def populate_camera_list(self):
         try:
             devices = enumerate_cameras(cv2.CAP_ANY)
@@ -1310,7 +1604,7 @@ class VideoWindow(QMainWindow):
     def face_dialog(self):
         self.dialog = QDialog(self)
         self.dialog.setWindowTitle("面部参数设置")
-        self.dialog.setStyleSheet(UWP_STYLE_SHEET)
+        self.dialog.setStyleSheet(MODERN_STYLE_SHEET)
         self.dialog.resize(800, 600)
         self.dialog.setWindowFlags(self.dialog.windowFlags() & ~Qt.WindowContextHelpButtonHint)
         layout = QVBoxLayout(self.dialog)
@@ -1324,8 +1618,6 @@ class VideoWindow(QMainWindow):
         self.lineEdits = {}
         self.checkBoxes = {}
         double_validator = QDoubleValidator()
-        
-        # 面部形状中英文映射
         blendshape_cn_mapping = {
             "None": "无",
             "EyeBlinkLeft": "左眼眨眼",
@@ -1392,29 +1684,22 @@ class VideoWindow(QMainWindow):
             "TongueX": "舌头X轴",
             "TongueY": "舌头Y轴"
         }
-        
-        # 位置和旋转参数中英文映射
         position_cn_mapping = {
             "x": "X位置",
             "y": "Y位置",
             "z": "Z位置"
         }
-        
         rotation_cn_mapping = {
             "x": "偏航",
             "y": "俯仰",
             "z": "翻滚"
         }
-        
         try:
             blendshape_data, _ = setup_data()
         except:
             blendshape_data = g.default_data
-        
-        # 添加BlendShapes参数
         for row, blendshape in enumerate(blendshape_data["BlendShapes"][1:], start=1):
             key = blendshape["k"]
-            # 使用中文名称，如果没有映射则使用原英文名称
             cn_name = blendshape_cn_mapping.get(key, key)
             v_edit = QLineEdit(str(round(blendshape["v"], 2)))
             v_edit.setValidator(double_validator)
@@ -1434,16 +1719,12 @@ class VideoWindow(QMainWindow):
             form_layout.addWidget(w_edit, row, 3)
             form_layout.addWidget(max_edit, row, 4)
             form_layout.addWidget(e_check, row, 5)
-        
-        # 添加分隔线
         separator = QFrame()
         separator.setFrameShape(QFrame.HLine)
         separator.setFrameShadow(QFrame.Sunken)
         separator.setObjectName("Separator")
         row += 1
         form_layout.addWidget(separator, row, 0, 1, 6)
-        
-        # 添加Position参数
         row += 1
         form_layout.addWidget(QLabel("位置参数"), row, 0, 1, 6)
         row += 1
@@ -1454,7 +1735,6 @@ class VideoWindow(QMainWindow):
             v_edit.setValidator(double_validator)
             s_edit = QLineEdit(str(round(pos["s"], 2)))
             s_edit.setValidator(double_validator)
-            # Position参数没有w和max属性，使用空字符串占位
             w_edit = QLineEdit("")
             w_edit.setEnabled(False)
             max_edit = QLineEdit("")
@@ -1470,16 +1750,12 @@ class VideoWindow(QMainWindow):
             form_layout.addWidget(max_edit, row, 4)
             form_layout.addWidget(e_check, row, 5)
             row += 1
-        
-        # 添加分隔线
         separator = QFrame()
         separator.setFrameShape(QFrame.HLine)
         separator.setFrameShadow(QFrame.Sunken)
         separator.setObjectName("Separator")
         form_layout.addWidget(separator, row, 0, 1, 6)
         row += 1
-        
-        # 添加Rotation参数
         form_layout.addWidget(QLabel("旋转参数"), row, 0, 1, 6)
         row += 1
         for rot in blendshape_data["Rotation"]:
@@ -1489,7 +1765,6 @@ class VideoWindow(QMainWindow):
             v_edit.setValidator(double_validator)
             s_edit = QLineEdit(str(round(rot["s"], 2)))
             s_edit.setValidator(double_validator)
-            # Rotation参数没有w和max属性，使用空字符串占位
             w_edit = QLineEdit("")
             w_edit.setEnabled(False)
             max_edit = QLineEdit("")
@@ -1515,8 +1790,6 @@ class VideoWindow(QMainWindow):
     def save_face_data(self):
         try:
             data = deepcopy(g.default_data)
-            
-            # 保存BlendShapes参数
             blendshape_idx = 1
             for key, edits in self.lineEdits.items():
                 if not key.startswith("pos_") and not key.startswith("rot_"):
@@ -1531,11 +1804,9 @@ class VideoWindow(QMainWindow):
                     data["BlendShapes"][blendshape_idx]["max"] = max_val
                     data["BlendShapes"][blendshape_idx]["e"] = e
                     blendshape_idx += 1
-            
-            # 保存Position参数
             for key, edits in self.lineEdits.items():
                 if key.startswith("pos_"):
-                    pos_key = key[4:]  # 去掉"pos_"前缀
+                    pos_key = key[4:]
                     for i, pos in enumerate(data["Position"]):
                         if pos["k"] == pos_key:
                             v = float(edits[0].text())
@@ -1545,11 +1816,9 @@ class VideoWindow(QMainWindow):
                             data["Position"][i]["s"] = s
                             data["Position"][i]["e"] = e
                             break
-            
-            # 保存Rotation参数
             for key, edits in self.lineEdits.items():
                 if key.startswith("rot_"):
-                    rot_key = key[4:]  # 去掉"rot_"前缀
+                    rot_key = key[4:]
                     for i, rot in enumerate(data["Rotation"]):
                         if rot["k"] == rot_key:
                             v = float(edits[0].text())
@@ -1559,7 +1828,6 @@ class VideoWindow(QMainWindow):
                             data["Rotation"][i]["s"] = s
                             data["Rotation"][i]["e"] = e
                             break
-            
             save_data(data)
             self.dialog.close()
             QMessageBox.information(self, "提示", "面部配置已保存")
@@ -1583,8 +1851,9 @@ class VideoWindow(QMainWindow):
             except:
                 pass
             self.controller_thread = None
-        self.image_label.setPixmap(QPixmap())
-        self.show_frame_button.setText("显示画面")
+        self.camera_image_label.clear()
+        self.camera_image_label.setText("请先追踪再来照镜子哦~")
+        self.camera_image_label.setStyleSheet("background-color: #F8F9FA; border-radius: 8px; font-size: 16px; color: #666666;")
     def set_process_priority(self):
         priority_mapping = {
             0: ("IDLE_PRIORITY_CLASS", 0x00000040),
@@ -1605,6 +1874,30 @@ class VideoWindow(QMainWindow):
             g.save_configs()
         except Exception as e:
             QMessageBox.critical(self, "错误", f"设置优先级失败：{str(e)}")
+    def set_render_device(self, index):
+        if index == 0:
+            g.config["Setting"]["render_device"] = "auto"
+        elif index == 1:
+            g.config["Setting"]["render_device"] = "cpu"
+        elif index == 2:
+            g.config["Setting"]["render_device"] = "gpu"
+        else:
+            gpu_index = index - 3
+            g.config["Setting"]["render_device"] = f"gpu_{gpu_index}"
+        g.save_configs()
+        if hasattr(g, 'face_detector'):
+            g.face_detector = None
+        if hasattr(g, 'hand_detector'):
+            g.hand_detector = None
+        if hasattr(g, 'tongue_model'):
+            g.tongue_model = None
+        if hasattr(g, 'pose_detector'):
+            g.pose_detector = None
+        if hasattr(self, 'video_thread') and self.video_thread:
+            self.video_thread.stop()
+            self.video_thread.wait()
+            self.video_thread = None
+            self.start_video_capture()
     def closeEvent(self, event):
         reply = QMessageBox.question(self, "确认", "确定退出？", QMessageBox.Yes | QMessageBox.No)
         if reply == QMessageBox.Yes:
